@@ -19,11 +19,29 @@ app.get("/", function (req, res) {
 });
 
 
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
-});
+app.get("api/timestamp/:dateString?", function(req, res) {
+  if (req.params.dateString) {
+    let dateString = req.params.dateString;
 
+    // If its in millisecond then convert it into intiger
+    if (dateString.length > 10) { 
+      dateString = Number(dateString);
+    }
+
+    const date = new Date(dateString);
+
+    if (date.getTime()) { // If valid
+      res.json({unix:date.getTime(),utc:date.toUTCString()});
+    } else { // If not valid
+      res.json({"error": "Invalid Date"});
+    }
+
+  } else {
+
+    let date = new Date();
+    res.json({unix:date.getTime(),utc:date.toUTCString()});
+  }
+}); 
 
 
 // listen for requests :)
