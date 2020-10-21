@@ -19,8 +19,7 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
-app.get("api/timestamp/:dateString?", function(req, res) {
+app.get("/api/timestamp/:dateString?", function(req, res) {
   if (req.params.dateString) {
     let dateString = req.params.dateString;
 
@@ -39,7 +38,7 @@ app.get("api/timestamp/:dateString?", function(req, res) {
 
   } else {
 
-    let date = new Date();
+    const date = new Date();
     res.json({unix:date.getTime(),utc:date.toUTCString()});
   }
 }); 
